@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: bitcoin-mvrv-dashboard
+    env: python
+    runCommand: gunicorn bitcoin_mvrv_dashboard:app
+    envVars:
+      - key: PORT
+        value: 10000
+    buildCommand: pip install -r requirements.txt
