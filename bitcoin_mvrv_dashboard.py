@@ -4,17 +4,19 @@ import pandas as pd
 import plotly.graph_objs as go
 from prophet import Prophet
 
+# Caricamento dati CSV
 df = pd.read_csv("bitcoin_mvrv_sample.csv")
 df["date"] = pd.to_datetime(df["date"])
 
+# Previsione MVRV totale
 prophet_df = df[["date", "mvrv_total"]].rename(columns={"date": "ds", "mvrv_total": "y"})
 model = Prophet()
 model.fit(prophet_df)
 future = model.make_future_dataframe(periods=180)
 forecast = model.predict(future)
 
+# App Dash
 app = dash.Dash(__name__)
-
 app.layout = html.Div([
     html.H1("Bitcoin MVRV Dashboard"),
     dcc.Graph(figure={
